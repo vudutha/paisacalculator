@@ -3,14 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paisa Calculator</title>
+    <title>Paisa Calculator - Calculate Your Interest with Ease</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0;
             text-align: center;
+        }
+
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        footer {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
         }
 
         input, button, select {
@@ -59,51 +84,84 @@
         button:hover {
             background-color: #218838;
         }
+
+        .explanation {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .explanation p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .explanation h2 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Paisa Calculator</h1>
+    <header>
+        <h1>Paisa Calculator</h1>
+    </header>
 
-    <div class="form-group">
-        <label for="amount">Amount:</label>
-        <div>
-            <input type="number" id="amount" placeholder="Enter Amount" min="0" required>
-            <select id="currency">
-                <option value="₹">INR (₹)</option>
-                <option value="$">USD ($)</option>
-                <option value="€">Euro (€)</option>
-                <option value="£">GBP (£)</option>
-            </select>
+    <div class="container">
+        <p>Welcome to the Paisa Calculator! This tool helps you calculate the interest accrued over time based on the amount you invest, the rate you set, and the duration. You can calculate interest for any amount in different currencies, making it easy to plan your finances.</p>
+
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <div>
+                <input type="number" id="amount" placeholder="Enter Amount" min="0" required>
+                <select id="currency">
+                    <option value="₹">INR (₹)</option>
+                    <option value="$">USD ($)</option>
+                    <option value="€">Euro (€)</option>
+                    <option value="£">GBP (£)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rate">Rate (₹ per 100/month):</label>
+            <input type="number" id="rate" placeholder="Enter Rate" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="months">Number of Months:</label>
+            <input type="number" id="months" placeholder="Enter Number of Months" min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date (dd/MM/yyyy):</label>
+            <input type="date" id="startDate" placeholder="Enter Start Date">
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date (dd/MM/yyyy):</label>
+            <input type="date" id="endDate" placeholder="Enter End Date">
+        </div>
+
+        <button onclick="calculateInterest()">Calculate</button>
+
+        <div class="output">
+            <p>Interest: <span id="interest">0</span></p>
+            <p>Total Amount: <span id="totalAmount">0</span></p>
+        </div>
+
+        <div class="explanation">
+            <h2>How to Use the Calculator</h2>
+            <p><strong>Amount:</strong> Enter the principal amount you want to invest or calculate interest on. You can choose your currency from INR, USD, Euro, or GBP. The amount you enter is the base on which interest will be calculated.</p>
+            <p><strong>Rate:</strong> Specify the rate at which interest will be charged per 100 units of your currency. This is usually the monthly interest rate, so for every 100 units of your currency, the rate you enter will be applied.</p>
+            <p><strong>Number of Months:</strong> Enter the duration for which you want to calculate interest. This is optional if you’re providing a specific date range below. If you enter a value here, it will override the date range.</p>
+            <p><strong>Start and End Dates:</strong> Optionally, you can select the start and end dates between which you want to calculate interest. The calculator will automatically compute the number of months between the two dates. Make sure the end date is after the start date.</p>
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="rate">Rate (₹ per 100/month):</label>
-        <input type="number" id="rate" placeholder="Enter Rate" min="0" required>
-    </div>
-
-    <div class="form-group">
-        <label for="months">Number of Months:</label>
-        <input type="number" id="months" placeholder="Enter Number of Months" min="0">
-    </div>
-
-    <div class="form-group">
-        <label for="startDate">Start Date (dd/MM/yyyy):</label>
-        <input type="date" id="startDate" placeholder="Enter Start Date">
-    </div>
-
-    <div class="form-group">
-        <label for="endDate">End Date (dd/MM/yyyy):</label>
-        <input type="date" id="endDate" placeholder="Enter End Date">
-    </div>
-
-    <button onclick="calculateInterest()">Calculate</button>
-
-    <div class="output">
-        <p>Interest: <span id="interest">0</span></p>
-        <p>Total Amount: <span id="totalAmount">0</span></p>
-    </div>
+    <footer>
+        <p>&copy; 2024 Paisa Calculator | Helping You Calculate Interest Easily</p>
+    </footer>
 
     <script>
         function calculateInterest() {
