@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paisa Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        .output {
+            margin-top: 20px;
+        }
+
+        .output span {
+            font-weight: bold;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            text-align: left;
+            color: #1e90ff; /* Label color (Dodger Blue) */
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745; /* Button color (Green) */
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Paisa Calculator</h1>
+
+    <div class="form-group">
+        <label for="amount">Amount:</label>
+        <div>
+            <input type="number" id="amount" placeholder="Enter Amount" min="0" required>
+            <select id="currency">
+                <option value="₹">INR (₹)</option>
+                <option value="$">USD ($)</option>
+                <option value="€">Euro (€)</option>
+                <option value="£">GBP (£)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="months">Number of Months:</label>
+        <input type="number" id="months" placeholder="Enter Number of Months" min="0" required>
+    </div>
+
+    <div class="form-group">
+        <label for="rate">Rate (₹ per 100/month):</label>
+        <input type="number" id="rate" placeholder="Enter Rate" min="0" required>
+    </div>
+
+    <button onclick="calculateInterest()">Calculate</button>
+
+    <div class="output">
+        <p>Interest: <span id="interest">0</span></p>
+        <p>Total Amount: <span id="totalAmount">0</span></p>
+    </div>
+
+    <script>
+        function calculateInterest() {
+            var amount = document.getElementById("amount").value;
+            var months = document.getElementById("months").value;
+            var rate = document.getElementById("rate").value;
+            var currency = document.getElementById("currency").value;
+
+            // Check for negative or empty values
+            if (amount <= 0 || months <= 0 || rate <= 0) {
+                alert("Please enter positive values for all fields.");
+                return;
+            }
+
+            // Calculate interest
+            var interest = (amount / 100) * rate * months;
+
+            // Total amount
+            var totalAmount = parseFloat(amount) + interest;
+
+            // Update the HTML with the calculated interest and total
+            document.getElementById("interest").textContent = currency + interest.toFixed(2);
+            document.getElementById("totalAmount").textContent = currency + totalAmount.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
