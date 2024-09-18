@@ -79,13 +79,23 @@
     </div>
 
     <div class="form-group">
-        <label for="months">Number of Months:</label>
-        <input type="number" id="months" placeholder="Enter Number of Months" min="0" required>
+        <label for="rate">Rate (₹ per 100/month):</label>
+        <input type="number" id="rate" placeholder="Enter Rate" min="0" required>
     </div>
 
     <div class="form-group">
-        <label for="rate">Rate (₹ per 100/month):</label>
-        <input type="number" id="rate" placeholder="Enter Rate" min="0" required>
+        <label for="months">Number of Months:</label>
+        <input type="number" id="months" placeholder="Enter Number of Months" min="0">
+    </div>
+
+    <div class="form-group">
+        <label for="startDate">Start Date (dd/MM/yyyy):</label>
+        <input type="date" id="startDate" placeholder="Enter Start Date">
+    </div>
+
+    <div class="form-group">
+        <label for="endDate">End Date (dd/MM/yyyy):</label>
+        <input type="date" id="endDate" placeholder="Enter End Date">
     </div>
 
     <button onclick="calculateInterest()">Calculate</button>
@@ -99,12 +109,36 @@
         function calculateInterest() {
             var amount = document.getElementById("amount").value;
             var months = document.getElementById("months").value;
-            var rate = document.getElementById("rate").value;
-            var currency = document.getElementById("currency").value;
+            var rate = document.getElementById("rate").value
 
-            // Check for negative or empty values
-            if (amount <= 0 || months <= 0 || rate <= 0) {
-                alert("Please enter positive values for all fields.");
+            var currency = document.getElementById("currency").value;
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            // Validate mandatory fields
+            if (amount <= 0 || rate <= 0 || (!months && (!startDate || !endDate))) {
+                alert("Please enter valid positive values for amount, rate, and either the number of months or start and end dates.");
+                return;
+            }
+
+            // Calculate months based on date range if months are not provided
+            if (!months && startDate && endDate) {
+                var start = new Date(startDate);
+                var end = new Date(endDate);
+                var timeDiff = end - start;
+
+                if (timeDiff <= 0) {
+                    alert("End date must be greater than start date.");
+                    return;
+                }
+
+                var monthDiff = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                months = Math.ceil(monthDiff); // Get the number of months between the dates
+            }
+
+            // Check for valid months
+            if (months <= 0) {
+                alert("Please provide a valid number of months.");
                 return;
             }
 
